@@ -433,7 +433,15 @@ paths:
               example:
                 code: 404
                 error: Not found
-  /certificates/pdf:
+  /certificates/{uuid}/attachment:
+    parameters:
+      - name: uuid
+        in: path
+        description: Identifiant du certificat précédemment créé.
+        required: true
+        schema:
+          type: string
+          format: uuid
     post:
       summary: Télécharger une attestation
       description: |
@@ -464,14 +472,8 @@ paths:
           'application/json':
             schema:
               type: object
-              required:
-                - uuid
               additionalProperties: false
               properties:
-                uuid:
-                  type: string
-                  format: uuid
-                  example: 8a9d2da9-39e3-4db7-be8e-12b4d2179fda
                 meta:
                   type: object
                   description: |
@@ -533,7 +535,7 @@ paths:
               example:
                 code: 404
                 error: Not found
-  /certificates/find/{uuid}:
+  /certificates/{uuid}:
     parameters:
       - name: uuid
         in: path
