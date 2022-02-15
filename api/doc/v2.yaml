@@ -653,7 +653,6 @@ paths:
         
         - montants financiers en **centimes d'Euros**
         - distances en **mètres**
-        - durées en **secondes**
 
         ### Données financières
 
@@ -716,11 +715,6 @@ paths:
                       multipleOf: 1
                       maximum: 1000000
                       description: Distance exprimée en mètre
-                    duration:
-                      type: number
-                      minimum: 0
-                      maximum: 86400
-                      description: Durée exprimée en seconde
                     revenue:
                       type: number
                       minimum: 0
@@ -754,11 +748,6 @@ paths:
                       multipleOf: 1
                       maximum: 1000000
                       description: Distance exprimée en mètre
-                    duration:
-                      type: number
-                      minimum: 0
-                      maximum: 86400
-                      description: Durée exprimée en seconde
                     contribution:
                       type: number
                       minimum: 0
