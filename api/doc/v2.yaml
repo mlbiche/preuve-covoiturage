@@ -136,19 +136,6 @@ components:
         - Numéro tronqué à 8 chiffres (phone_trunc) + identifiant unique de l'opérateur (operator_user_id)
       additionalProperties: false
       properties:
-        firstname:
-          type: string
-          description: Prénom de l'occupant
-        lastname:
-          type: string
-          description: Nom de l'occupant
-        email:
-          type: string
-          description: Email de l'occupant
-          format: email
-        company:
-          type: string
-          description: Nom de l'employeur de l'occupant
         travel_pass:
           type: object
           description: |
