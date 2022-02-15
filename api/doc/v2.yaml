@@ -628,6 +628,18 @@ paths:
                 code: 404
                 error: Not found
   /journeys:
+    get:
+      summary: Liste des trajets
+      parameters:
+        - name: status
+          in: query
+          description: Statut du trajet
+          example: "invalidated"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
     post:
       summary: Envoyer un trajet
       description: |
