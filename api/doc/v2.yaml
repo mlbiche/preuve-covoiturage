@@ -29,10 +29,6 @@ components:
       description: |
         Tableau reprenant la liste complète des incitations appliquées (ordre d'application, montant, identifiant de l'incitateur). Si aucune incitation, envoyer un tableau vide
         
-        ## Dépréciation 
-        Les propriétés `passenger.incentives` et `driver.incentives` sont en cours de dépréciation au profit d'une propriété commune au couple.
-        Ainsi, par convention en attendant la V3 de l'API, il faut mettre l'ensemble des incitations du couple sur la propriété `driver.incentives`.
-
         ## Ordre par défaut
         Par défaut, l'ordre d'application des politiques incitatives est le suivant :
         1. Territoire (AOM, Région, ...)
@@ -664,6 +660,7 @@ paths:
               type: object
               required:
                 - journey_id
+                - incentives
                 - operator_class
               additionalProperties: false
               properties:
@@ -679,20 +676,19 @@ paths:
                     - B
                     - C
                   description: classe de preuve correspondant aux spécifications définies dans [Classes de preuve de covoiturage](https://doc.covoiturage.beta.gouv.fr/le-registre-de-preuve-de-covoiturage/classes-de-preuve-and-identite/classes-a-b-c).
+                incentives:
+                  '$ref': '#/components/schemas/incentives'
                 driver:
                   type: object
                   additionalProperties: false
                   required:
                     - identity
-                    - incentives
                     - start
                     - end
                     - revenue
                   properties:
                     identity:
                       '$ref': '#/components/schemas/identity'
-                    incentives:
-                      '$ref': '#/components/schemas/incentives'
                     payments:
                       '$ref': '#/components/schemas/payments'
                     start:
@@ -717,15 +713,12 @@ paths:
                   additionalProperties: false
                   required:
                     - identity
-                    - incentives
                     - start
                     - end
                     - contribution
                   properties:
                     identity:
                       '$ref': '#/components/schemas/identity'
-                    incentives:
-                      '$ref': '#/components/schemas/incentives'
                     payments:
                       '$ref': '#/components/schemas/payments'
                     start:
@@ -1036,7 +1029,5 @@ paths:
                   journey_id:
                     type: string
                     description: Identifiant du trajet envoyé par l'opérateur
-                  passenger:
-                    '$ref': '#/components/schemas/incentives'
-                  driver:
+                  incentives:
                     '$ref': '#/components/schemas/incentives'
