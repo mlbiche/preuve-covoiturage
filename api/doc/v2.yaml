@@ -264,10 +264,12 @@ components:
               type: integer
             weekend_trips:
               type: integer
-            km:
+            distance:
               type: integer
-            euros:
+              description: distance en mètre
+            amount:
               type: number
+              description: montant en centimes d'euros
         trips:
           type: array
           items:
@@ -283,10 +285,12 @@ components:
                 format: date-time
               trips:
                 type: integer
-              km:
+              distance:
                 type: integer
-              euros:
+                description: distance en mètre
+              amount:
                 type: number
+                description: montant en centimes d'euros
 paths:
   /certificates:
     post:
