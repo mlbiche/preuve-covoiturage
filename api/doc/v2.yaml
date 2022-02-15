@@ -110,43 +110,7 @@ components:
       type: object
       additionalProperties: false
       description: |
-        L'ordre de priorité des propriétés de position est le suivant :
-          1. lon/lat
-          2. insee
-          3. literal/country
-        Attention, **lon** dépend de **lat** et **literal** dépend de **country**.
-      required:
-        - datetime
-      properties:
-        datetime:
-          type: string
-          format: date-time 
-          description: |
-            Date et heure du départ/arrivée au format ISO 8601. L'heure est exprimée en UTC (YYYY-MM-DDThh:mm:ssZ)
-            L'heure est exprimée en UTC \(Coordinated Universal Time\). UTC n'est pas ajusté sur l'heure d'été et hiver !
-          example: '2021-01-01T11:00:00Z'
-        lat:
-          '$ref': "#/components/schemas/lat"
-        lon:
-          '$ref': "#/components/schemas/lon"
-        insee:
-          type: string
-          description: |
-            Code INSEE commune ou arrondissement de la position
-            Pour le métropoles qui comportent un code INSEE global et des codes par arrondissement, utiliser le code arrondissement.
-        literal:
-          type: string
-          description: Adresse littérale
-          example: 5 rue du Paradis, 75010 Paris
-        country:
-          type: string
-          description: Nom complet du pays
-    geopointcoord:
-      type: object
-      additionalProperties: false
-      description: |
         Position lat/lon + date 
-        Attention, contrairement à la requête pour envoyer des preuves, la simulation ne supporte que les données géographiques sous forme lat/lon.
       required:
         - datetime
         - lat
@@ -292,6 +256,41 @@ components:
                 type: number
                 description: montant en centimes d'euros
 paths:
+  /geo/address:
+    get:
+      parameters:
+        - name: literal
+          in: query
+          description: Adresse littérale
+          example: 5 rue du Paradis, 75010 Paris
+          schema:
+            type: string
+        - name: country
+          in: query
+          description: Nom complet du pays
+          example: France
+          required: true
+          schema:
+            type: string
+      summary: Geocoding
+      responses:
+        '200':
+          description: Ok
+  /geo/insee/{code}:
+    get:
+      summary: Geocoding
+      parameters:
+        - name: code
+          in: query
+          description: |
+            Code INSEE commune ou arrondissement de la position
+            Pour le métropoles qui comportent un code INSEE global et des codes par arrondissement, utiliser le code arrondissement.
+          example: "91177"
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
   /certificates:
     post:
       security:
@@ -983,9 +982,9 @@ paths:
                     identity:
                       '$ref': '#/components/schemas/identity'
                     start:
-                      '$ref': '#/components/schemas/geopointcoord'
+                      '$ref': '#/components/schemas/geopoint'
                     end:
-                      '$ref': '#/components/schemas/geopointcoord'
+                      '$ref': '#/components/schemas/geopoint'
                     distance:
                       type: number
                       minimum: 0
@@ -1011,9 +1010,9 @@ paths:
                     identity:
                       '$ref': '#/components/schemas/identity'
                     start:
-                      '$ref': '#/components/schemas/geopointcoord'
+                      '$ref': '#/components/schemas/geopoint'
                     end:
-                      '$ref': '#/components/schemas/geopointcoord'
+                      '$ref': '#/components/schemas/geopoint'
                     distance:
                       type: number
                       minimum: 0
