@@ -239,6 +239,39 @@ components:
                 type: number
                 description: montant en centimes d'euros
 paths:
+  /geo/distance:
+    get:
+      parameters:
+        - name: start_literal
+          in: query
+          description: Adresse littérale
+          example: 5 rue du Paradis, 75010 Paris
+          schema:
+            type: string
+        - name: start_country
+          in: query
+          description: Nom complet du pays
+          example: France
+          required: true
+          schema:
+            type: string
+        - name: end_literal
+          in: query
+          description: Adresse littérale
+          example: 5 rue du Paradis, 75010 Paris
+          schema:
+            type: string
+        - name: end_country
+          in: query
+          description: Nom complet du pays
+          example: France
+          required: true
+          schema:
+            type: string
+      summary: Geocoding
+      responses:
+        '200':
+          description: Ok
   /geo/address:
     get:
       parameters:
@@ -676,6 +709,7 @@ paths:
                 - operator_class
                 - start
                 - end
+                - distance
               additionalProperties: false
               properties:
                 operator_journey_id:
